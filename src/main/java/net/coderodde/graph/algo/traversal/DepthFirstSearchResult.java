@@ -11,7 +11,6 @@ import java.util.Map;
 public class DepthFirstSearchResult {
    
     private final boolean isAcyclic;
-    private final Map<Integer, NodeColor> nodeColorMap;
     private final Map<Integer, Integer> startingTimeMap;
     private final Map<Integer, Integer> finishingTimeMap;
     private final Map<Integer, Integer> parentMap;
@@ -22,7 +21,6 @@ public class DepthFirstSearchResult {
                            Map<Integer, Integer> finishingTimeMap,
                            Map<Integer, Integer> parentMap) {
         this.isAcyclic        = isAcyclic;
-        this.nodeColorMap     = nodeColorMap;
         this.startingTimeMap  = startingTimeMap;
         this.finishingTimeMap = finishingTimeMap;
         this.parentMap        = parentMap;
@@ -30,10 +28,6 @@ public class DepthFirstSearchResult {
     
     public boolean isAcyclic() {
         return isAcyclic;
-    }
-    
-    public Map<Integer, NodeColor> getNodeColorMap() {
-        return nodeColorMap;
     }
     
     public Map<Integer, Integer> getStartingTimeMap() {

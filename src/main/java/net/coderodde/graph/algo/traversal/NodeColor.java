@@ -12,7 +12,7 @@ package net.coderodde.graph.algo.traversal;
  * @author Rodion "rodde" Efremov
  * @version 1.6 (Jan 13, 2016)
  */
-public enum NodeColor {
+enum NodeColor {
     WHITE,
     GRAY,
     BLACK

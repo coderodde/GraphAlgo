@@ -66,7 +66,7 @@ public class DepthFirstSearch {
             }
         }
         
-        return new DepthFirstSearchResult(false,
+        return new DepthFirstSearchResult(isAcyclic,
                                           colors,
                                           startTimes,
                                           endTimes,

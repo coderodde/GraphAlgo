@@ -3,6 +3,8 @@ package net.coderodde.graph.algo.traversal;
 import java.util.Map;
 import net.coderodde.graph.DirectedGraph;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 public class DepthFirstSearchTest {
@@ -57,9 +59,35 @@ public class DepthFirstSearchTest {
         assertEquals(null, parents.get(w));
         assertEquals(w, (int) parents.get(z));
         
-        System.out.println(result.getStartingTimeMap());
-        System.out.println(result.getFinishingTimeMap());
-        System.out.println(result.getParentMap());
+        assertFalse(result.isAcyclic());
+        
+        graph.clear();
+        graph.addEdge(0, 1);
+        
+        result = new DepthFirstSearch().traverseGraph(graph);
+        
+        assertTrue(result.isAcyclic());
+        
+        graph.addEdge(1, 0);
+        
+        result = new DepthFirstSearch().traverseGraph(graph);
+        
+        assertFalse(result.isAcyclic());
+        
+        graph.clear();
+        result = new DepthFirstSearch().traverseGraph(graph);
+        
+        assertTrue(result.isAcyclic());
+        
+        graph.addNode(0);
+        result = new DepthFirstSearch().traverseGraph(graph);
+        
+        assertTrue(result.isAcyclic());
+        
+        graph.addEdge(0, 0);
+        result = new DepthFirstSearch().traverseGraph(graph);
+        
+        assertFalse(result.isAcyclic());
     }
     
 }
