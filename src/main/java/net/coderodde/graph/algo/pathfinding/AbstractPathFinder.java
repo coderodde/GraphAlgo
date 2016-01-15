@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import net.coderodde.graph.AbstractGraph;
 
 /**
@@ -37,5 +38,10 @@ public abstract class AbstractPathFinder {
         
         Collections.<Integer>reverse(nodeList);
         return new Path(nodeList, graph);
+    }
+    
+    protected void check(Integer source, Integer target) {
+        Objects.requireNonNull(source, "The source node is null.");
+        Objects.requireNonNull(target, "The target node is null.");
     }
 }

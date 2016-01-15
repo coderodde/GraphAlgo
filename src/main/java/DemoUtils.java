@@ -35,31 +35,31 @@ public final class DemoUtils {
         while (arcs > 0) {
             int sourceLayerIndex = random.nextInt(layers);
             int targetLayerIndex = random.nextInt(layers);
-            
-            if (sourceLayerIndex < targetLayerIndex) {
-                Integer tail = choose(layersList.get(sourceLayerIndex), random);
-                Integer head = choose(layersList.get(targetLayerIndex), random);
-                graph.addEdge(tail, head);
-                --arcs;
-            }
-//            if (targetLayerIndex < sourceLayerIndex) {
-//                continue;
-//            } else if (sourceLayerIndex == targetLayerIndex) {
-//                int sourceNode = choose(layersList.get(sourceLayerIndex), random);
-//                int targetNode = choose(layersList.get(sourceLayerIndex), random);
-//                
-//                if (sourceNode >= targetNode) {
-//                    continue;
-//                }
-//                
-//                graph.addEdge(sourceNode, targetNode);
-//            } else {
-//               Integer tail = choose(layersList.get(sourceLayerIndex), random);
-//               Integer head = choose(layersList.get(targetLayerIndex), random);
-//               graph.addEdge(tail, head);
-//            }
 //            
-//            --arcs;
+//            if (sourceLayerIndex < targetLayerIndex) {
+//                Integer tail = choose(layersList.get(sourceLayerIndex), random);
+//                Integer head = choose(layersList.get(targetLayerIndex), random);
+//                graph.addEdge(tail, head);
+//                --arcs;
+//            }
+            if (targetLayerIndex < sourceLayerIndex) {
+                continue;
+            } else if (sourceLayerIndex == targetLayerIndex) {
+                int sourceNode = choose(layersList.get(sourceLayerIndex), random);
+                int targetNode = choose(layersList.get(sourceLayerIndex), random);
+                
+                if (sourceNode >= targetNode) {
+                    continue;
+                }
+                
+                graph.addEdge(sourceNode, targetNode);
+            } else {
+               Integer tail = choose(layersList.get(sourceLayerIndex), random);
+               Integer head = choose(layersList.get(targetLayerIndex), random);
+               graph.addEdge(tail, head);
+            }
+            
+            --arcs;
         }
         
         return graph;

@@ -29,11 +29,24 @@ public class Path {
         double w = 0.0;
         
         for (int i = 0; i < nodeList.size() - 1; ++i) {
-            graph.getEdgeWeight(nodeList.get(i), 
-                                nodeList.get(i + 1));
+            w += graph.getEdgeWeight(nodeList.get(i), 
+                                     nodeList.get(i + 1));
         }
         
         this.weight = w;
+    }
+    
+    public int size() {
+        return nodeList.size();
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Path)) {
+            return false;
+        }
+        
+        return nodeList.equals(((Path) o).nodeList);
     }
     
     public static Path emptyPath() {
@@ -54,5 +67,22 @@ public class Path {
     
     public double getWeight() {
         return weight;
+    }
+    
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append('[');
+        int size = nodeList.size();
+        
+        for (int i = 0; i < size; ++i) {
+            sb.append(nodeList.get(i));
+            
+            if (i < size - 1) {
+                sb.append(", ");
+            }
+        }
+        
+        return sb.append(']').toString();
     }
 }
