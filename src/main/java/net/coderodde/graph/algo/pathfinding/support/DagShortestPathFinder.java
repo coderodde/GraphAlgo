@@ -20,6 +20,7 @@ import net.coderodde.graph.algo.traversal.DepthFirstSearchResult;
  */
 public class DagShortestPathFinder extends AbstractPathFinder {
 
+    private List<Integer> nodeList; 
     private final DirectedGraph graph;
     private final Map<Integer, Integer> map = new LinkedHashMap<>();
     
@@ -34,20 +35,45 @@ public class DagShortestPathFinder extends AbstractPathFinder {
         Objects.requireNonNull(source, "The source node is null.");
         Objects.requireNonNull(target, "The target node is null.");
         
-        Map<Integer, Integer> g       = new HashMap<>();
+        Map<Integer, Double> g       = new HashMap<>();
         Map<Integer, Integer> parents = new HashMap<>();
         
-        g.put(source, 0);
+        g.put(source, 0.0);
         parents.put(source, null);
         
-        return null;
+        int last = map.get(target);
+        
+        for (int i = map.get(source); i <= last; ++i) {
+            Integer current = nodeList.get(i);
+            
+            if (!g.containsKey(current)) {
+                continue;
+            }
+            
+            if (current.equals(target)) {
+                return tracebackPath(target, parents, graph);
+            }
+            
+            for (Integer child : graph.getChildrenOf(current)) {
+                if (!g.containsKey(child) 
+                        || g.get(child) > g.get(current) + 
+                                          graph.getEdgeWeight(current, child)) {
+                    g.put(child, g.get(current) + graph.getEdgeWeight(current, 
+                                                                      child));
+                    parents.put(child, current);
+                }
+            }
+        }
+        
+        return Path.emptyPath();
     }
     
     private void preprocess() {
-        DepthFirstSearchResult data = 
-                new DepthFirstSearch().traverseGraph(graph);
-        List<Integer> topologicalOrder = 
-                new TopologicalSort().sort((DirectedGraph) graph);
+        nodeList = new TopologicalSort().sort(graph);
+        int nodes = nodeList.size();
         
+        for (int i = 0; i < nodes; ++i) {
+            map.put(nodeList.get(i), i);
+        }
     }
 }

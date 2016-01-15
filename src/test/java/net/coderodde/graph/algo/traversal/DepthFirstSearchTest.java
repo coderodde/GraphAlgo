@@ -88,6 +88,14 @@ public class DepthFirstSearchTest {
         result = new DepthFirstSearch().traverseGraph(graph);
         
         assertFalse(result.isAcyclic());
+        
+        graph.clear();
+        graph.addNode(0);
+        graph.addNode(1);
+        
+        result = new DepthFirstSearch().traverseGraph(graph);
+        
+        assertTrue(result.isAcyclic());
     }
     
 }

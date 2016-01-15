@@ -102,6 +102,7 @@ public class DepthFirstSearch {
                 iteratorStack.removeLast();
                 Integer nodeId = nodeStack.removeLast();
                 endTimes.put(nodeId, ++time);
+                colors.put(nodeId, NodeColor.BLACK);
             }
         }
     }
