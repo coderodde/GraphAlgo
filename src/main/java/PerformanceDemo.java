@@ -2,8 +2,8 @@ import java.util.Random;
 import net.coderodde.graph.DirectedGraph;
 import net.coderodde.graph.algo.pathfinding.AbstractPathFinder;
 import net.coderodde.graph.algo.pathfinding.Path;
-import net.coderodde.graph.algo.pathfinding.support.BreadthFirstSearchPathFinder;
 import net.coderodde.graph.algo.pathfinding.support.DagShortestPathFinder;
+import net.coderodde.graph.algo.pathfinding.support.DijkstraPathFinder;
 
 public class PerformanceDemo {
 
@@ -12,25 +12,32 @@ public class PerformanceDemo {
     }
     
     public static void profileUnweightedDagShortestPath() {
-        final int ARCS = 1_500_000;
-        final int LAYERS = 5_000;
-        final int MAX_LAYER_SIZE = 10;
+        final int ARCS = 2_000_000;
+        final int LAYERS = 1000;
+        final int MAX_LAYER_SIZE = 50;
+        final double MAX_WEIGHT = 100.0;
         final long seed = System.nanoTime();
         
         Random random = new Random(seed);
-        
-        System.out.println("Seed = " + seed);
-        
         DirectedGraph dag = 
                 DemoUtils.createRandomDag(ARCS, 
                                           LAYERS, 
                                           MAX_LAYER_SIZE, 
+                                          MAX_WEIGHT,
                                           random);
-
+        
+        System.out.println("Seed = " + seed);
+        
         AbstractPathFinder finder = new DagShortestPathFinder(dag);
         
         Integer source = random.nextInt(dag.size());
         Integer target = random.nextInt(dag.size());
+        
+        if (target < source) {
+            Integer tmp = target;
+            target = source;
+            source = tmp;
+        }
         
         System.out.println("Source: " + source);
         System.out.println("Target: " + target);
@@ -44,7 +51,7 @@ public class PerformanceDemo {
                           (endTime - startTime) / 1e6);
         System.out.println("Path weight: " + path1.getWeight());
         
-        finder = new BreadthFirstSearchPathFinder(dag);
+        finder = new DijkstraPathFinder(dag);
         
         startTime = System.nanoTime();
         Path path2 = finder.search(source, target);

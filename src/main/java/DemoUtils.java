@@ -12,6 +12,7 @@ public final class DemoUtils {
     public static DirectedGraph createRandomDag(int arcs, 
                                                 int layers,
                                                 int maxLayerSize,
+                                                double maxWeight,
                                                 Random random) {
         DirectedGraph graph = new DirectedGraph();
         
@@ -35,13 +36,7 @@ public final class DemoUtils {
         while (arcs > 0) {
             int sourceLayerIndex = random.nextInt(layers);
             int targetLayerIndex = random.nextInt(layers);
-//            
-//            if (sourceLayerIndex < targetLayerIndex) {
-//                Integer tail = choose(layersList.get(sourceLayerIndex), random);
-//                Integer head = choose(layersList.get(targetLayerIndex), random);
-//                graph.addEdge(tail, head);
-//                --arcs;
-//            }
+            
             if (targetLayerIndex < sourceLayerIndex) {
                 continue;
             } else if (sourceLayerIndex == targetLayerIndex) {
@@ -52,11 +47,13 @@ public final class DemoUtils {
                     continue;
                 }
                 
-                graph.addEdge(sourceNode, targetNode);
+                graph.addEdge(sourceNode, 
+                              targetNode, 
+                              maxWeight * random.nextDouble() );
             } else {
                Integer tail = choose(layersList.get(sourceLayerIndex), random);
                Integer head = choose(layersList.get(targetLayerIndex), random);
-               graph.addEdge(tail, head);
+               graph.addEdge(tail, head, maxWeight * random.nextDouble());
             }
             
             --arcs;
